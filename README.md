@@ -32,3 +32,9 @@ For a Cloudflare-managed subdomain, add the exact hostname to the Vercel project
 ## Existing service
 
 [Planner 5D](https://planner5d.com/interior-design-app) offers room planning and phone-based home scanning. The app links to this service; it is not an embedded integration and does not upload room data to it.
+
+## Photo-guided home model
+
+The default workspace now shows an estimated whole-home layout derived from the supplied sketch and photos. All dimensions and inferred fittings are provisional; see [assumptions](docs/estimated-layout.md). Use Dimensions to refine room sizes and Furniture to place objects in a selected room. The previous standalone editor and its saved plan remain available through Room studio. Home plans use separate local storage and version-2 JSON exports. Original photos are not included in the repository or published website.
+
+Run `npm test` (Node.js 22.13+ for the built-in TypeScript stripping API) for home layout, fitting and import-validation checks.

@@ -1,0 +1,14 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {stripTypeScriptTypes} from 'node:module';
+const moduleUrl=code=>'data:text/javascript;base64,'+Buffer.from(code).toString('base64');
+const compile=path=>stripTypeScriptTypes(fs.readFileSync(new URL(path,import.meta.url),'utf8'));
+const roomUrl=moduleUrl(compile('../lib/room.ts'));
+const home=await import(moduleUrl(compile('../lib/home.ts').replace("'./room'",JSON.stringify(roomUrl))));
+test('default home export validates and contains all six regions',()=>{const p=home.initialHome();assert.ok(home.validHome(JSON.parse(JSON.stringify(p))));assert.equal(home.zones(p.dimensions).length,6);assert.ok(p.items.every(i=>home.canFit(i,p.dimensions)));});
+test('bedroom and bathroom meet the footprint edges',()=>{const d=home.defaultDimensions,rooms=home.zones(d),b=rooms.find(z=>z.id==='bedroom'),bath=rooms.find(z=>z.id==='bathroom');assert.equal(b.x+b.width/2,bath.x-bath.width/2);assert.equal(bath.x+bath.width/2,d.width/2);assert.ok(Math.abs((b.z+b.depth/2)-(bath.z+bath.depth/2))<1e-9);});
+test('dimension constraints preserve bedroom and access space',()=>{const d=home.normalizeDimensions({...home.defaultDimensions,width:4,kitchenWidth:5,bathroomWidth:2.5,bedroomDepth:2.8,bathroomDepth:2.8,balconyDepth:4,livingDepth:3});assert.ok(d.width-d.kitchenWidth>=1.19);assert.ok(d.width-d.bathroomWidth>=2.59);assert.ok(d.bathroomDepth<=d.bedroomDepth-.3);assert.ok(d.balconyDepth<=d.livingDepth-.4);});
+test('moving a rotated chair clamps it within its room',()=>{const i={...home.initialHome().items[0],x:100,z:-100,rotation:45};const fitted=home.fitHomeItem(i,home.defaultDimensions);assert.ok(home.canFit(fitted,home.defaultDimensions));assert.ok(fitted.x<2);assert.ok(fitted.z>-2);});
+test('a double bed cannot be placed on the narrow balcony',()=>{const i={...home.initialHome().items.find(i=>i.kind==='bed'),zone:'balcony'};assert.equal(home.canFit(i,home.defaultDimensions),false);});
+test('imports reject invalid dimensions, unknown regions and duplicate ids',()=>{const p=home.initialHome();assert.equal(home.validHome({...p,dimensions:{...p.dimensions,width:NaN}}),false);assert.equal(home.validHome({...p,items:[{...p.items[0],zone:'roof'}]}),false);assert.equal(home.validHome({...p,items:[p.items[0],p.items[0]]}),false);assert.equal(home.validHome({...p,items:[null]}),false);});

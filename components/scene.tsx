@@ -3,8 +3,8 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, RoundedBox, Grid, Html } from '@react-three/drei';
 import { catalog, type Item, type Room } from '@/lib/room';
 
-function Box({position=[0,0,0],size,color}:{position?:[number,number,number];size:[number,number,number];color:string}) {return <RoundedBox args={size} position={position} radius={.035} smoothness={2} castShadow receiveShadow><meshStandardMaterial color={color} roughness={.8}/></RoundedBox>}
-function Furniture({item,selected,onSelect}:{item:Item;selected:boolean;onSelect:()=>void}){
+export function Box({position=[0,0,0],size,color}:{position?:[number,number,number];size:[number,number,number];color:string}) {return <RoundedBox args={size} position={position} radius={Math.min(.035,...size.map(n=>n/4))} smoothness={2} castShadow receiveShadow><meshStandardMaterial color={color} roughness={.8}/></RoundedBox>}
+export function Furniture({item,selected,onSelect}:{item:Item;selected:boolean;onSelect:()=>void}){
  const {kind,color}=item;
  const size=catalog.find(c=>c.kind===kind)!.size;
  return <group position={[item.x,.03,item.z]} rotation={[0,item.rotation*Math.PI/180,0]} onClick={e=>{e.stopPropagation();onSelect()}}>

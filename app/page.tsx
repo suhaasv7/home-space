@@ -1,2 +1,2 @@
-import Planner from '@/components/planner';
-export default function Page(){ return <Planner/>; }
+import Workspace from '@/components/workspace';
+export default function Page(){ return <Workspace/>; }
