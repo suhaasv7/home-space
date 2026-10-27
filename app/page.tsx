@@ -1,2 +1,2 @@
-import Workspace from '@/components/workspace';
-export default function Page(){ return <Workspace/>; }
+import HomePlanner from '@/components/home-planner';
+export default function Page(){ return <HomePlanner/>; }
