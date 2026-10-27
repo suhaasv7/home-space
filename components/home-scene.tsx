@@ -26,7 +26,7 @@ export default function HomeScene({plan,top,cutaway,active,selected,onSelect,onZ
  const h=top?.1:cutaway?1.05:d.height,wall=(x:number,z:number,width:number,depth:number)=> <Wall x={x} z={z} width={width} depth={depth} height={h} top={top}/>;
  const living=rooms.find(z=>z.id==='living')!;
  return <Canvas shadows dpr={[1,1.6]} camera={{position:[9,11,12],fov:40}} onPointerMissed={()=>onSelect(null)} fallback={<div className='canvas-message'>Enable WebGL to explore the 3D model.</div>}>
- <color attach='background' args={['#eeeae3']}/><ambientLight intensity={1.7}/><directionalLight position={[-3,12,6]} intensity={2.5} castShadow shadow-mapSize={[2048,2048]} shadow-camera-left={-15} shadow-camera-right={15} shadow-camera-top={15} shadow-camera-bottom={-15}/>
+ <color attach='background' args={['#101813']}/><ambientLight intensity={1.7}/><directionalLight position={[-3,12,6]} intensity={2.5} castShadow shadow-mapSize={[2048,2048]} shadow-camera-left={-15} shadow-camera-right={15} shadow-camera-top={15} shadow-camera-bottom={-15}/>
  {rooms.map(z=><group key={z.id}><group onClick={e=>{e.stopPropagation();onZone(z.id)}}><Box size={[z.width,.12,z.depth]} position={[z.x,-.07,z.z]} color={active===z.id?'#cfbf9b':z.color}/></group>
  {Array.from({length:Math.floor(z.width/.6)},(_,i)=><Box key={`x${i}`} size={[.008,.005,z.depth]} position={[z.x-z.width/2+(i+1)*.6,.001,z.z]} color='#a5a69c'/>)}
  {Array.from({length:Math.floor(z.depth/.6)},(_,i)=><Box key={`z${i}`} size={[z.width,.005,.008]} position={[z.x,.001,z.z-z.depth/2+(i+1)*.6]} color='#a5a69c'/>)}
@@ -47,7 +47,7 @@ export default function HomeScene({plan,top,cutaway,active,selected,onSelect,onZ
  <Wall x={left-d.balconyWidth} z={living.z} width={.1} depth={d.balconyDepth} height={top?.1:1} top={top} color='#8eb9b6'/>
  {[-1,1].map(s=><Wall key={s} x={left-d.balconyWidth/2} z={living.z+s*d.balconyDepth/2} width={d.balconyWidth} depth={.1} height={top?.1:1} top={top} color='#8eb9b6'/>)}
  {plan.items.map(i=>{const z=rooms.find(z=>z.id===i.zone)!;return <group key={i.id} position={[z.x,0,z.z]}><Furniture item={i} selected={i.id===selected} onSelect={()=>onSelect(i.id)}/></group>})}
- <Grid position={[0,-.15,0]} args={[40,40]} cellSize={1} cellColor='#cfc9bd' sectionColor='#cfc9bd' fadeDistance={30}/>
+ <Grid position={[0,-.15,0]} args={[40,40]} cellSize={1} cellColor='#35483b' sectionColor='#35483b' fadeDistance={30}/>
  <OrbitControls key={`${top}-${total}`} makeDefault target={[0,0,0]} minDistance={3} maxDistance={35} enableRotate={!top} maxPolarAngle={Math.PI/2.05}/><Camera top={top} depth={total}/>
  </Canvas>;
 }
