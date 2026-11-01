@@ -33,6 +33,12 @@ Pending: inspect manifests and existing docs; confirm install, development, buil
 4. Which security boundaries and operations need explicit approval?
 5. Which unresolved decisions should block work, and which routine choices may Codex make?
 
+## Confirmed workflow for the current correction
+
+Observed commands: npm test runs Node geometry/import tests; npm run build runs production compilation and TypeScript; npm run dev and npm start provide local previews. Run tests and build for this change and check the affected 3D editor in a browser.
+
+Use the existing Notion task for the measured model, record acceptance/results and attach the PR. Branch from the fetched main branch and open a PR targeting main; do not push directly to main or mark the task Done before review/merge. Keep measured versus inferred facts explicit and private source photos outside the deployment. Broader agent-rule interview remains pending.
+
 ## Timeline
 
 - 2026-11-01: Created project agent workflow and interview scaffold.

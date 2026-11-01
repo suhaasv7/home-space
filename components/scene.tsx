@@ -4,10 +4,10 @@ import { OrbitControls, RoundedBox, Grid, Html } from '@react-three/drei';
 import { catalog, type Item, type Room } from '@/lib/room';
 
 export function Box({position=[0,0,0],size,color}:{position?:[number,number,number];size:[number,number,number];color:string}) {return <RoundedBox args={size} position={position} radius={Math.min(.035,...size.map(n=>n/4))} smoothness={2} castShadow receiveShadow><meshStandardMaterial color={color} roughness={.8}/></RoundedBox>}
-export function Furniture({item,selected,onSelect}:{item:Item;selected:boolean;onSelect:()=>void}){
+export function Furniture({item,selected,onSelect}:{item:Item & {size?:[number,number,number]};selected:boolean;onSelect:()=>void}){
  const {kind,color}=item;
  const size=catalog.find(c=>c.kind===kind)!.size;
- return <group position={[item.x,.03,item.z]} rotation={[0,item.rotation*Math.PI/180,0]} onClick={e=>{e.stopPropagation();onSelect()}}>
+ return <group scale={item.size?item.size.map((n,index)=>n/size[index]) as [number,number,number]:undefined} position={[item.x,.03,item.z]} rotation={[0,item.rotation*Math.PI/180,0]} onClick={e=>{e.stopPropagation();onSelect()}}>
  {selected&&<mesh rotation={[-Math.PI/2,0,0]} position={[0,.008,0]}><planeGeometry args={[size[0]+.16,size[2]+.16]}/><meshBasicMaterial color="#b47b46" transparent opacity={.45}/></mesh>}
  {(kind==='sofa'||kind==='chair')&&<><Box size={[size[0],.25,.8]} position={[0,.3,0]} color={color}/><Box size={[size[0],.55,.18]} position={[0,.65,-.35]} color={color}/>{[-1,1].map(s=><Box key={s} size={[.16,.42,.85]} position={[s*(size[0]/2-.08),.5,0]} color={color}/>)}{[-1,1].map(s=><Box key={s} size={[size[0]/2-.2,.12,.59]} position={[s*(size[0]/4-.05),.48,.04]} color={color}/>)}{[-1,1].flatMap(x=>[-1,1].map(z=><Box key={`${x}${z}`} size={[.08,.19,.08]} position={[x*(size[0]/2-.16),.12,z*.28]} color="#5d4632"/>))}</>}
  {kind==='table'&&<><Box size={[1.2,.1,.65]} position={[0,.42,0]} color={color}/>{[-1,1].flatMap(x=>[-1,1].map(z=><Box key={`${x}${z}`} size={[.07,.38,.07]} position={[x*.48,.2,z*.22]} color="#674c35"/>))}<Box size={[.25,.025,.2]} position={[-.22,.49,0]} color="#e5dfd3"/><mesh position={[.25,.56,0]}><cylinderGeometry args={[.07,.07,.16,24]}/><meshStandardMaterial color="#c6a881"/></mesh></>}

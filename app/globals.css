@@ -8,3 +8,5 @@
 
 /* Dark surfaces retain contrast for controls and native inputs. */
 .button.primary,.brand-icon{background:#9fc6ad;color:#14241a;border-color:#9fc6ad}.catalog-card{background:#1c2820}.tabs button.active{color:#b7ddbd;border-color:#b7ddbd}.settings input:not([type=range]):not([type=color]){background:#202c24;color:#e5ebe7;border-color:#405044}.zone-label.selected{color:#e5ebe7}.canvas-message{color:#b4c7b4}.toast{background:#2c4535;color:#e5ebe7}.toast button{color:#e5ebe7}
+
+.measured-reference{font-size:11px;margin:0;line-height:1.8}.measured-reference dt{color:var(--muted);margin-top:8px}.measured-reference dd{margin:0;color:var(--ink)}.dimension-source{display:block;font-size:10px;color:var(--muted);margin-top:5px}.legacy-backup{margin-top:20px;padding-top:15px;border-top:1px solid var(--line);font-size:11px;line-height:1.7;color:var(--muted)}.legacy-backup .button{width:100%;font-size:11px}.settings label>span{float:none;display:block;margin-top:5px;font-variant-numeric:tabular-nums}

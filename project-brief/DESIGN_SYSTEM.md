@@ -36,6 +36,10 @@ Pending interview. Preserve and reconcile existing project documentation.
 4. Which mobile/desktop layouts and loading, error, empty, and interaction states are required?
 5. What accessibility requirements or visual constraints should we enforce?
 
+## Approved scope: retain incumbent interface
+
+Observed implementation: the site uses a dark green 3D-only editor, DM Sans/Manrope typography, a left settings sidebar and furniture controls. Preserve that visual identity for this geometry correction. Show feet/inches with metric values, distinguish supplied references from inferred/derived and edited values, and keep controls labelled and usable on narrow screens. The user-approved review image is the geometry reference, not a request to restyle the product. Broader design interview remains pending.
+
 ## Timeline
 
 - 2026-11-01: Created interview scaffold; project decisions are not yet approved.
